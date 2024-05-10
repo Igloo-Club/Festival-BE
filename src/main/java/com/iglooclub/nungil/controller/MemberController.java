@@ -47,13 +47,6 @@ public class MemberController {
         return ResponseEntity.ok(null);
     }
 
-    @PatchMapping("/api/member/company/toggle")
-    public ResponseEntity<?> updateDisableCompany(@RequestBody DisableCompanyRequest request, Principal principal) {
-        Member member = getMember(principal);
-        DisableCompanyResponse response = memberService.updateDisableCompany(member, request.getDisableCompany());
-        return ResponseEntity.ok(response);
-    }
-
     @PatchMapping("/api/member/schedule")
     public ResponseEntity<?> updateSchedule(@RequestBody ScheduleUpdateRequest request, Principal principal) {
         Member member = getMember(principal);
@@ -76,8 +69,8 @@ public class MemberController {
     }
 
     @GetMapping("/api/markers")
-    public List<AvailableMarker> getAllMarkers(@RequestParam Location location){
-        return memberService.getAllMarkers(location);
+    public List<AvailableMarker> getAllMarkers(){
+        return memberService.getAllMarkers();
     }
 
     private Member getMember(Principal principal) {

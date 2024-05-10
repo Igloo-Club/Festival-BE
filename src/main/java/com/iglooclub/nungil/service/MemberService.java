@@ -141,19 +141,6 @@ public class MemberService {
     }
 
     /**
-     * 주어진 회원의 '회사 사람 만나지 않기' 값을 변경하는 메서드이다.
-     * @param member 값을 바꿀 Member 엔티티
-     * @param disableCompany 바꿀 '회사 사람 만나지 않기' 값
-     * @return 변경된 '회사 사람 만나지 않기' 값
-     */
-    @Transactional
-    public DisableCompanyResponse updateDisableCompany(Member member, Boolean disableCompany) {
-        Boolean newDisableCompany = member.updateDisableCompany(disableCompany);
-
-        return DisableCompanyResponse.create(newDisableCompany);
-    }
-
-    /**
      * 매일 자정에 drawCount = 0으로 초기화
      *
      */
@@ -166,11 +153,9 @@ public class MemberService {
 
     /**
      * 모든 마커 정보를 조회하는 메서드이다.
-     * @param location 반환 마커 소재지
      */
-    public List<AvailableMarker> getAllMarkers(Location location) {
+    public List<AvailableMarker> getAllMarkers() {
         List<AvailableMarker> markerList = Arrays.asList(Marker.values()).stream()
-                .filter(marker -> marker.getLocation() == location)
                 .map(marker -> AvailableMarker.create(marker))
                 .collect(Collectors.toList());
         return markerList;
