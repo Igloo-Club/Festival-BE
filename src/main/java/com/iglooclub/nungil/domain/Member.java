@@ -107,9 +107,7 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HobbyAllocation> hobbyAllocationList = new ArrayList<>();
 
-    @Builder.Default
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Contact contact = Contact.builder().build();
+
 
     @Builder.Default
     @OneToMany(mappedBy = "member")
@@ -157,7 +155,6 @@ public class Member {
         this.nickname = request.getNickname();
         this.sex = request.getSex();
         this.birthdate = request.getBirthdate();
-        this.contact.update(request.getContactKakao(), request.getContactInstagram());
         this.animalFace = request.getAnimalFace();
         this.job = request.getJob();
         this.height = request.getHeight();

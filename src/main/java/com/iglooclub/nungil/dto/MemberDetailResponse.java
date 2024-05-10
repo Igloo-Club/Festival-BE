@@ -70,8 +70,6 @@ public class MemberDetailResponse {
         response.nickname = member.getNickname();
         response.sex = member.getSex();
         response.birthdate = member.getBirthdate();
-        response.contactKakao = member.getContact().getKakao();
-        response.contactInstagram = member.getContact().getInstagram();
         response.animalFace = member.getAnimalFace();
         response.job = member.getJob();
         response.height = member.getHeight();
