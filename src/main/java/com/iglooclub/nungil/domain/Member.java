@@ -240,13 +240,10 @@ public class Member {
         this.company = company;
     }
 
-    public void updateSchedule(Location location, List<Yoil> yoilList, List<AvailableTime> availableTimeList, List<Marker> markerList) {
+    public void updateSchedule(List<AvailableTime> availableTimeList, List<Marker> markerList) {
         List<AvailableTimeAllocation> newAvailableTimeAllocationList = availableTimeList.stream()
                 .map(v -> AvailableTimeAllocation.builder().availableTime(v).member(this).build())
                 .collect(Collectors.toList());
-
-        this.location = location;
-        this.yoilList = yoilList;
 
         this.availableTimeAllocationList.clear();
         this.availableTimeAllocationList.addAll(newAvailableTimeAllocationList);
@@ -264,8 +261,6 @@ public class Member {
     public void updatePhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-
-    public void updateLocation(Location location) {this.location = location;}
 
     public void plusDrawCount() {this.drawCount += 1L;}
 

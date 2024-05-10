@@ -163,14 +163,6 @@ public class MemberService {
         memberRepository.initDrawCount();
     }
 
-    /**
-     * 주어진 회원의 location 필드를 수정하는 메서드이다.
-     * @request locationRequest location 정보
-     */
-    @Transactional
-    public void updateLocation(LocationRequest locationRequest, Member member){
-        member.updateLocation(locationRequest.getLocation());
-    }
 
     /**
      * 모든 마커 정보를 조회하는 메서드이다.
