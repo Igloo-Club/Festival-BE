@@ -106,18 +106,13 @@ public class OauthService {
             return RegisterProgress.PLACE_INPUT;
         }
 
-        // 회사 이메일 인증 후이면, 닉네임 입력부터
-        if (member.getCompany() != null) {
+        // 전화번호 인증 후이면, 닉네임 입력부터
+        if (member.getPhoneNumber() != null) {
             return RegisterProgress.NICKNAME_INPUT;
         }
 
-        // 전화번호 인증 후이면, 회사 이메일 입력부터
-        if (member.getPhoneNumber() != null) {
-            return RegisterProgress.COMPANY_EMAIL_INPUT;
-        }
-
-        // 전화번호 인증 전이면, 맨 처음(약관동의)부터
-        return RegisterProgress.AGREEMENT;
+        // 전화번호 인증 전이면, 맨 처음(전화번호입력)부터
+        return RegisterProgress.PHONE_NUMBER_INPUT;
     }
 
     /**
