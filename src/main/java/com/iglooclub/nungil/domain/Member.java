@@ -159,10 +159,6 @@ public class Member {
         this.job = request.getJob();
         this.height = request.getHeight();
         this.mbti = request.getMbti();
-        this.marriageState = request.getMarriageState();
-        this.religion = request.getReligion();
-        this.alcohol = request.getAlcohol();
-        this.smoke = request.getSmoke();
         this.description = request.getDescription();
 
         this.faceDepictionAllocationList.clear();

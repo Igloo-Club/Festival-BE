@@ -30,12 +30,6 @@ public class ProfileUpdateRequest {
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate birthdate;
 
-    @Size(max = 255)
-    private String contactKakao;
-
-    @Size(max = 255)
-    private String contactInstagram;
-
     @NotNull
     private AnimalFace animalFace;
 
@@ -49,17 +43,6 @@ public class ProfileUpdateRequest {
     @NotNull
     private Mbti mbti;
 
-    @NotNull
-    private MarriageState marriageState;
-
-    @NotNull
-    private Religion religion;
-
-    @NotNull
-    private Alcohol alcohol;
-
-    @NotNull
-    private Smoke smoke;
 
     @NotNull
     private List<FaceDepiction> faceDepictionList;
@@ -68,7 +51,7 @@ public class ProfileUpdateRequest {
     private List<PersonalityDepiction> personalityDepictionList;
 
     @NotNull
-    @Size(max = 1000)
+    @Size(max = 50)
     private String description;
 
     private List<Hobby> hobbyList;
