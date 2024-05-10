@@ -64,11 +64,7 @@ public class MemberService {
 
     @Transactional
     public void updateSchedule(Member member, ScheduleUpdateRequest request) {
-        // 가능한 요일 목록을 [일,월,...,토] 순으로 정렬
-        List<Yoil> sortedYoilList = request.getYoilList();
-        Collections.sort(sortedYoilList);
-
-        member.updateSchedule(request.getLocation(), sortedYoilList, request.getAvailableTimeList(), request.getMarkerList());
+        member.updateSchedule(request.getAvailableTimeList(), request.getMarkerList());
     }
 
     /**
