@@ -33,13 +33,6 @@ public class MemberController {
         return ResponseEntity.ok(consentPolicy);
     }
 
-    @PostMapping("/api/member")
-    public ResponseEntity<?> createProfile(@RequestBody @Valid ProfileUpdateRequest request, Principal principal) {
-        Member member = getMember(principal);
-        memberService.updateProfile(member, request);
-        return ResponseEntity.ok(null);
-    }
-
     @GetMapping("/api/member")
     public ResponseEntity<MemberDetailResponse> getMemberDetail(Principal principal) {
         Member member = getMember(principal);
