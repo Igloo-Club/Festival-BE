@@ -202,6 +202,16 @@ public class Member {
         this.hobbyAllocationList.addAll(hobbyAllocationList);
     }
 
+    public void deleteAvailableTime(AvailableTime availableTime){
+        List<AvailableTime> newAvailableTimeList = this.getAvailableTimeList();
+        newAvailableTimeList.remove(availableTime);
+        List<AvailableTimeAllocation> newAvailableTimeAllocationList = newAvailableTimeList.stream()
+                .map(v -> AvailableTimeAllocation.builder().availableTime(v).member(this).build())
+                .collect(Collectors.toList());
+
+        this.availableTimeAllocationList.clear();
+        this.availableTimeAllocationList.addAll(newAvailableTimeAllocationList);
+    }
 
     public void updateSchedule(List<AvailableTime> availableTimeList, List<Marker> markerList) {
         List<AvailableTimeAllocation> newAvailableTimeAllocationList = availableTimeList.stream()

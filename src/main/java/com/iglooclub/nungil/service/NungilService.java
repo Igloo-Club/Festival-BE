@@ -208,6 +208,8 @@ public class NungilService {
         List<AvailableTime> commonAvailableTimes = findCommonAvailableTimes(member, sender);
         if(!commonAvailableTimes.isEmpty()){
             time = commonAvailableTimes.get(0);
+            member.deleteAvailableTime(time);
+            sender.deleteAvailableTime(time);
         }
         receivedNungil.update(marker, time);
         sentNungil.update(marker, time);
@@ -283,6 +285,7 @@ public class NungilService {
                 .expiredAt(nungil.getExpiredAt())
                 .build();
     }
+
 
     //두 사용자의 공통 시간을 추출
     public List<AvailableTime> findCommonAvailableTimes(Member member1, Member member2) {
