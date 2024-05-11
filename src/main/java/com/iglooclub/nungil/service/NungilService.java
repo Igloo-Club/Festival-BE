@@ -9,22 +9,17 @@ import com.iglooclub.nungil.exception.ChatRoomErrorResult;
 import com.iglooclub.nungil.exception.GeneralException;
 import com.iglooclub.nungil.exception.MemberErrorResult;
 import com.iglooclub.nungil.exception.NungilErrorResult;
-import com.iglooclub.nungil.repository.AcquaintanceRepository;
 import com.iglooclub.nungil.repository.ChatRoomRepository;
 import com.iglooclub.nungil.repository.MemberRepository;
 import com.iglooclub.nungil.repository.NungilRepository;
 import com.iglooclub.nungil.util.CoolSMS;
 import lombok.RequiredArgsConstructor;
-import org.jetbrains.annotations.Nullable;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.*;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -49,6 +44,20 @@ public class NungilService {
     private static final Long RECOMMENDATION_LIMIT = 3L;
 
     /* 눈길 관리 */
+    /**
+     * 추천 눈길을 생성하는 api 입니다
+     *
+     * @request member
+     * @return nungilResponse 추천되는 사용자 눈길 정보
+     */
+    @Transactional
+    public NungilResponse addRecommendMember(Member member){
+
+        Nungil newNungil = Nungil.create(member, member, NungilStatus.RECOMMENDED);
+        nungilRepository.save(newNungil);
+
+        return convertToNungilResponse(newNungil);
+    }
 
     /**
      * 요청 눈길상태의 프로필을 전체 조회하는 api입니다
@@ -89,16 +98,11 @@ public class NungilService {
         PageRequest pageRequest = PageRequest.of(page, size,Sort.by("createdAt").descending());
 
         // Nungil 엔티티를 데이터베이스에서 조회
-        Slice<Nungil> nungilSlice = nungilRepository.findAllByMemberAndStatus(pageRequest, member, NungilStatus.RECOMMENDED);
-
-        if (member.getLocation() == null || nungilSlice.getContent().stream()
-                .anyMatch(nungil -> nungil.getReceiver().getLocation() == null)) {
-            throw new GeneralException(MemberErrorResult.LOCATION_NOT_FOUND);
-        }
+        Slice<Nungil> nungilSlice = nungilRepository.findAllByStatus(pageRequest, NungilStatus.RECOMMENDED);
 
         // Nungil 엔티티를 NungilPageResponse DTO로 변환
         List<NungilSliceResponse> nungilResponses = nungilSlice.getContent().stream()
-                .filter(nungil -> member.getLocation().equals(nungil.getReceiver().getLocation()))
+                .filter(nungil -> !member.equals(nungil.getReceiver()))
                 .map(nungil -> NungilSliceResponse.create(nungil, nungil.getReceiver()))
                 .collect(Collectors.toList());
 
@@ -146,14 +150,13 @@ public class NungilService {
         }
 
         //사용자의 눈길 상태를 SENT, 만료일을 일주일 뒤로 설정
-        nungil.setStatus(NungilStatus.SENT);
-        nungil.setExpiredAt7DaysAfter();
+        Nungil newNungil1 = Nungil.create(member, receiver, NungilStatus.SENT);
+        nungilRepository.save(newNungil1);
 
 
         //눈길 받는 사용자 눈길 객체 생성 및 저장
-        Nungil newNungil = Nungil.create(receiver, member, NungilStatus.RECEIVED);
-        newNungil.setExpiredAt7DaysAfter();
-        nungilRepository.save(newNungil);
+        Nungil newNungil2 = Nungil.create(receiver, member, NungilStatus.RECEIVED);
+        nungilRepository.save(newNungil2);
 
         // 눈길 받은 사용자에게 알림 전송
 //        String phoneNumber = receiver.getPhoneNumber();
@@ -161,7 +164,7 @@ public class NungilService {
 //        String text = "[눈길] 새로운 눈길이 도착했어요. 얼른 확인해보세요!\n" + url;
 //
 //        coolSMS.send(phoneNumber, text);
-        this.sendNungilSMS(receiver, newNungil);
+//        this.sendNungilSMS(receiver, newNungil2);
     }
     public void sendNungilSMS(Member sender, Nungil sentNungil){
         publisher.publishEvent(new NungilSentEvent(sender, sentNungil));
@@ -273,7 +276,6 @@ public class NungilService {
                 .animalFace(nungil.getReceiver().getAnimalFace().getTitle())
                 .mbti(nungil.getReceiver().getMbti())
                 .job(nungil.getReceiver().getJob())
-                .height(nungil.getReceiver().getHeight())
                 .faceDepictionAllocationList(nungil.getReceiver().getFaceDepictionAllocationsAsString())
                 .personalityDepictionAllocationList(nungil.getReceiver().getPersonalityDepictionAllocationAsString())
                 .description(nungil.getReceiver().getDescription())

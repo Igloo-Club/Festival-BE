@@ -3,7 +3,6 @@ package com.iglooclub.nungil.domain;
 import com.iglooclub.nungil.domain.enums.AvailableTime;
 import com.iglooclub.nungil.domain.enums.Marker;
 import com.iglooclub.nungil.domain.enums.NungilStatus;
-import com.iglooclub.nungil.domain.enums.Yoil;
 import com.iglooclub.nungil.util.converter.MarkerListConverter;
 import lombok.*;
 import org.springframework.lang.Nullable;

@@ -20,6 +20,14 @@ public class NungilController {
     private final NungilService nungilService;
     private final MemberService memberService;
 
+    @PostMapping("/addRecommendNungil")
+    public ResponseEntity<NungilResponse> addRecommendMember(Principal principal){
+        Member member = getMember(principal);
+        NungilResponse nungilResponse = nungilService.addRecommendMember(member);
+
+        return ResponseEntity.ok(nungilResponse);
+    }
+
     @GetMapping("/nungils")
     public ResponseEntity<Slice<NungilSliceResponse>> getNungilsByMemberAndStatus(Principal principal, @RequestParam NungilStatus status, @RequestParam int page, @RequestParam int size){
         Member member = getMember(principal);

@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface NungilRepository extends JpaRepository<Nungil, Long> {
+    Slice<Nungil> findAllByStatus(PageRequest request, NungilStatus status);
     Slice<Nungil> findAllByMemberAndStatus(PageRequest request, Member member, NungilStatus status);
     Optional<Nungil> findById(Long nungilId);
     Optional<Nungil> findFirstByMemberAndReceiver(Member member, Member receiver);
