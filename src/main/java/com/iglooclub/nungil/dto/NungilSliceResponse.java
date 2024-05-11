@@ -15,8 +15,6 @@ public class NungilSliceResponse {
 
     private String animalFace;
 
-    private String companyName;
-
     private String job;
 
     private String description;
@@ -30,14 +28,12 @@ public class NungilSliceResponse {
     public static NungilSliceResponse create(Nungil nungil, Member member) {
         NungilSliceResponse response = new NungilSliceResponse();
         AnimalFace animalFace = member.getAnimalFace();
-        Company company = member.getCompany();
 
         response.nungilId = nungil.getId();
         response.createdAt = nungil.getCreatedAt();
         response.expiredAt = nungil.getExpiredAt();
 
         response.animalFace = (animalFace != null) ? animalFace.getTitle() : null;
-        response.companyName = (company != null) ? company.getCompanyName() : null;
         response.job = member.getJob();
         response.description = member.getDescription();
         response.nickname = member.getNickname();
