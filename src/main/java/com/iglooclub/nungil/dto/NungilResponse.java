@@ -23,8 +23,6 @@ public class NungilResponse {
 
     private String job;
 
-    private Integer height;
-
     private String faceDepictionAllocationList;
 
     private String personalityDepictionAllocationList;
