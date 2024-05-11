@@ -38,33 +38,19 @@ public class Member {
 
     private LocalDate birthdate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
-    private Company company;
 
     private String email;
 
     @Enumerated(value = EnumType.STRING)
     private AnimalFace animalFace;
 
-    @Enumerated(value = EnumType.STRING)
-    private Alcohol alcohol;
-
-    @Enumerated(value = EnumType.STRING)
-    private Smoke smoke;
-
-    @Enumerated(value = EnumType.STRING)
-    private Religion religion;
 
     @Enumerated(value = EnumType.STRING)
     private Mbti mbti;
 
     private String job;
 
-    private Integer height;
 
-    @Enumerated(value = EnumType.STRING)
-    private MarriageState marriageState;
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -139,7 +125,6 @@ public class Member {
         this.birthdate = request.getBirthdate();
         this.animalFace = request.getAnimalFace();
         this.job = request.getJob();
-        this.height = request.getHeight();
         this.mbti = request.getMbti();
         this.description = request.getDescription();
 
@@ -217,10 +202,6 @@ public class Member {
         this.hobbyAllocationList.addAll(hobbyAllocationList);
     }
 
-    public void setCompany(String email, Company company) {
-        this.email = email;
-        this.company = company;
-    }
 
     public void updateSchedule(List<AvailableTime> availableTimeList, List<Marker> markerList) {
         List<AvailableTimeAllocation> newAvailableTimeAllocationList = availableTimeList.stream()
