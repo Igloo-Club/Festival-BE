@@ -38,9 +38,6 @@ public class ProfileUpdateRequest {
     private String job;
 
     @NotNull
-    private Integer height;
-
-    @NotNull
     private Mbti mbti;
 
 
