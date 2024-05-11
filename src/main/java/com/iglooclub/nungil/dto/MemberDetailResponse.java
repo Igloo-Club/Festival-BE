@@ -25,8 +25,6 @@ public class MemberDetailResponse {
 
     private String job;
 
-    private Integer height;
-
     private Mbti mbti;
 
     private List<FaceDepiction> faceDepictionList;
@@ -59,7 +57,6 @@ public class MemberDetailResponse {
         response.birthdate = member.getBirthdate();
         response.animalFace = member.getAnimalFace();
         response.job = member.getJob();
-        response.height = member.getHeight();
         response.mbti = member.getMbti();
         response.faceDepictionList = faceDepictionList;
         response.personalityDepictionList = personalityDepictionList;
