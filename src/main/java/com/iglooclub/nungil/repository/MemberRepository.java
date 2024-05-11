@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
+public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByOauthInfo(OauthInfo oauthInfo);
 
     Optional<Member> findByEmail(String email);
