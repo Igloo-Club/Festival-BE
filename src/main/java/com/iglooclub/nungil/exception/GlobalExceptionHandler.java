@@ -1,7 +1,5 @@
 package com.iglooclub.nungil.exception;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpHeaders;
@@ -43,7 +41,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
         log.warn("Invalid DTO Parameter errors : {}", errorList);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(new ErrorResponse(HttpStatus.BAD_REQUEST.toString(), errorList.toString()));
+                .body(ErrorResponse.create(HttpStatus.BAD_REQUEST.toString(), errorList.toString()));
     }
 
     @ExceptionHandler({
@@ -64,18 +62,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     private ResponseEntity<ErrorResponse> makeErrorResponseEntity(final ErrorResult errorResult, final String message) {
         return ResponseEntity.status(errorResult.getHttpStatus())
-                .body(new ErrorResponse(errorResult.name(), message));
+                .body(ErrorResponse.create(errorResult.name(), message));
     }
 
     private ResponseEntity<ErrorResponse> makeErrorResponseEntity(final ErrorResult errorResult) {
         return ResponseEntity.status(errorResult.getHttpStatus())
-                .body(new ErrorResponse(errorResult.name(), errorResult.getMessage()));
+                .body(ErrorResponse.create(errorResult));
     }
 
-    @Getter
-    @RequiredArgsConstructor
-    static class ErrorResponse {
-        private final String code;
-        private final String message;
-    }
 }
