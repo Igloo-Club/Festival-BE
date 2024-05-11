@@ -1,15 +1,11 @@
 package com.iglooclub.nungil.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.iglooclub.nungil.domain.Nungil;
 import com.iglooclub.nungil.domain.enums.AvailableTime;
-import com.iglooclub.nungil.domain.enums.Location;
 import com.iglooclub.nungil.domain.enums.Marker;
-import com.iglooclub.nungil.domain.enums.Yoil;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 

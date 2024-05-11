@@ -1,11 +1,8 @@
 package com.iglooclub.nungil.dto;
 
 import com.iglooclub.nungil.domain.enums.AvailableTime;
-import com.iglooclub.nungil.domain.enums.Location;
 import com.iglooclub.nungil.domain.enums.Marker;
-import com.iglooclub.nungil.domain.enums.Yoil;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

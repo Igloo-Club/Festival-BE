@@ -2,7 +2,6 @@ package com.iglooclub.nungil.domain;
 
 import com.iglooclub.nungil.domain.enums.*;
 import com.iglooclub.nungil.dto.ProfileUpdateRequest;
-import com.iglooclub.nungil.util.converter.YoilListConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -103,19 +102,9 @@ public class Member {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<HobbyAllocation> hobbyAllocationList = new ArrayList<>();
 
-
-
     @Builder.Default
     @OneToMany(mappedBy = "member")
     private List<Nungil> nungilList = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany(mappedBy = "member")
-    private List<Acquaintance> acquaintanceList = new ArrayList<>();
-
-    @Convert(converter = YoilListConverter.class)
-    @Builder.Default
-    private List<Yoil> yoilList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
@@ -132,11 +121,9 @@ public class Member {
         this.noshowCount = 0;
         this.hobbyAllocationList = new ArrayList<>();
         this.nungilList = new ArrayList<>();
-        this.acquaintanceList = new ArrayList<>();
         this.faceDepictionAllocationList = new ArrayList<>();
         this.personalityDepictionAllocationList = new ArrayList<>();
         this.markerAllocationList = new ArrayList<>();
-        this.yoilList = new ArrayList<>();
         this.drawCount = 0L;
     }
 
