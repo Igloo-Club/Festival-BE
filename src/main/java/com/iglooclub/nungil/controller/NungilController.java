@@ -19,16 +19,6 @@ import java.security.Principal;
 public class NungilController {
     private final NungilService nungilService;
     private final MemberService memberService;
-    @PostMapping("/recommend")
-    public ResponseEntity<NungilResponse> recommendMember( Principal principal, @RequestBody ProfileRecommendRequest request){
-        Member member = getMember(principal);
-        NungilResponse nungilResponse = nungilService.recommendMember(member, request);
-        if (nungilResponse == null){
-            //추천할 사용자가 없는 경우
-            return ResponseEntity.ok(null);
-        }
-        return ResponseEntity.ok(nungilResponse);
-    }
 
     @GetMapping("/nungils")
     public ResponseEntity<Slice<NungilSliceResponse>> getNungilsByMemberAndStatus(Principal principal, @RequestParam NungilStatus status, @RequestParam int page, @RequestParam int size){

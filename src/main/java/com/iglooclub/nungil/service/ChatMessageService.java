@@ -135,21 +135,6 @@ public class ChatMessageService {
 
 
     /**
-     * 매 시 정각 expireAt이 초과된 채팅룸/채팅 내역을 삭제합니다.
-     *
-     *
-     */
-    @Scheduled(cron = "0 0 * * * *") // 매시 정각에 실행
-    @Transactional
-    public void deleteExpiredChatRoom() {
-        LocalDateTime now = LocalDateTime.now();
-        List<ChatRoom> chatRoomList = chatRoomRepository.findByExpiredAtBefore(now);
-        for (ChatRoom chatRoom : chatRoomList) {
-            chatRoomRepository.delete(chatRoom);
-        }
-    }
-
-    /**
      * 사용자의 채팅방 목록을 Slice 형식으로 조회하는 메서드입니다.
      * @param member 조회를 요청한 회원의 엔티티
      * @param pageRequest 조회되는 페이지 번호, 갯수, 정렬 방식(최근순)
@@ -186,10 +171,8 @@ public class ChatMessageService {
 
         List<AvailableTime> timeList = opponent.getAvailableTimeList();
         List<Marker> markersList = opponent.getMarkerList();
-        List<Yoil> yoilList = opponent.getYoilList();
-        Location location = opponent.getLocation();
 
-        return AvailableTimeAndPlaceResponse.create(yoilList, timeList, markersList, location);
+        return AvailableTimeAndPlaceResponse.create(timeList, markersList);
     }
 
 

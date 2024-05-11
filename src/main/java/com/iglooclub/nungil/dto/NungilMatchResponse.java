@@ -18,37 +18,23 @@ import java.util.stream.Collectors;
 public class NungilMatchResponse {
 
     @Nullable
-    private String matchYoil;
-
-    @JsonFormat(pattern = "yyyyMMdd")
-    private LocalDate matchDate;
-
-    @Nullable
     private String time;
 
     private List<AvailableMarker> marker;
 
-    private String location;
 
     @Nullable
     private Long chatRoomId;
 
-    public static NungilMatchResponse create(Nungil nungil, Long chatRoomId, Yoil matchYoil, LocalDate matchDate) {
+    public static NungilMatchResponse create(Nungil nungil, Long chatRoomId) {
 
         NungilMatchResponse response = new NungilMatchResponse();
-
-        response.matchYoil = (matchYoil != null) ? matchYoil.getTitle() : null;
-
-        response.matchDate = (matchYoil != null) ? matchDate : null;
 
         AvailableTime matchedAvailableTime = nungil.getMatchedAvailableTime();
         response.time = (matchedAvailableTime != null) ? matchedAvailableTime.getTitle() : null;
 
         List<Marker> matchedMarkers = nungil.getMatchedMarkers();
         response.marker = matchedMarkers.stream().map(AvailableMarker::create).collect(Collectors.toList());
-
-        Location location = nungil.getReceiver().getLocation();
-        response.location = (location != null) ? location.getTitle() : null;
 
         response.chatRoomId = chatRoomId;
 

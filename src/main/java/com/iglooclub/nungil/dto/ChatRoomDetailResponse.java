@@ -16,8 +16,6 @@ public class ChatRoomDetailResponse {
 
     private String nickname;
 
-    private String companyName;
-
     private String job;
 
     private Long ownMemberId;
@@ -30,9 +28,6 @@ public class ChatRoomDetailResponse {
 
         AnimalFace animalFace = opponent.getAnimalFace();
         response.animalFace = (animalFace != null) ? animalFace.getTitle() : null;
-
-        Company company = opponent.getCompany();
-        response.companyName = (company != null) ? company.getCompanyName() : null;
 
         response.nickname = opponent.getNickname();
         response.job = opponent.getJob();

@@ -21,10 +21,6 @@ public class MemberDetailResponse {
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate birthdate;
 
-    private String contactKakao;
-
-    private String contactInstagram;
-
     private AnimalFace animalFace;
 
     private String job;
@@ -32,14 +28,6 @@ public class MemberDetailResponse {
     private Integer height;
 
     private Mbti mbti;
-
-    private MarriageState marriageState;
-
-    private Religion religion;
-
-    private Alcohol alcohol;
-
-    private Smoke smoke;
 
     private List<FaceDepiction> faceDepictionList;
 
@@ -53,7 +41,6 @@ public class MemberDetailResponse {
 
     private List<Hobby> hobbyList;
 
-    private Boolean disableCompany;
 
     private Boolean agreeMarketing;
 
@@ -74,17 +61,12 @@ public class MemberDetailResponse {
         response.job = member.getJob();
         response.height = member.getHeight();
         response.mbti = member.getMbti();
-        response.marriageState = member.getMarriageState();
-        response.religion = member.getReligion();
-        response.alcohol = member.getAlcohol();
-        response.smoke = member.getSmoke();
         response.faceDepictionList = faceDepictionList;
         response.personalityDepictionList = personalityDepictionList;
         response.description = member.getDescription();
         response.markerList = markerList;
         response.availableTimeList = availableTimeList;
         response.hobbyList = hobbyList;
-        response.disableCompany = member.getDisableCompany();
 
         ConsentPolicy consentPolicy = member.getConsentPolicy();
         response.agreeMarketing = consentPolicy != null && consentPolicy.getAgreeMarketing();
