@@ -9,6 +9,7 @@ import com.iglooclub.nungil.exception.ChatRoomErrorResult;
 import com.iglooclub.nungil.exception.GeneralException;
 import com.iglooclub.nungil.exception.MemberErrorResult;
 import com.iglooclub.nungil.exception.NungilErrorResult;
+import com.iglooclub.nungil.repository.AcquaintanceRepository;
 import com.iglooclub.nungil.repository.ChatRoomRepository;
 import com.iglooclub.nungil.repository.MemberRepository;
 import com.iglooclub.nungil.repository.NungilRepository;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 public class NungilService {
     private final MemberRepository memberRepository;
     private final NungilRepository nungilRepository;
+    private final AcquaintanceRepository acquaintanceRepository;
 
     private final ChatRoomRepository chatRoomRepository;
 
@@ -103,6 +105,7 @@ public class NungilService {
         // Nungil 엔티티를 NungilPageResponse DTO로 변환
         List<NungilSliceResponse> nungilResponses = nungilSlice.getContent().stream()
                 .filter(nungil -> !member.equals(nungil.getReceiver()))
+                .filter(nungil -> acquaintanceRepository.findByMemberAndAcquaintanceMember(member, nungil.getReceiver()).isEmpty())
                 .map(nungil -> NungilSliceResponse.create(nungil, nungil.getReceiver()))
                 .collect(Collectors.toList());
 
@@ -138,6 +141,10 @@ public class NungilService {
         Nungil nungil = nungilRepository.findById(nungilId)
                 .orElseThrow(()->new GeneralException(NungilErrorResult.NUNGIL_NOT_FOUND));
         Member receiver = nungil.getReceiver();
+        Acquaintance memberAcquaintance = getAcquaintance(member, receiver);
+        Acquaintance receiverAcquaintance = getAcquaintance(receiver, member);
+        acquaintanceRepository.save(memberAcquaintance);
+        acquaintanceRepository.save(receiverAcquaintance);
 
         if(!nungil.getStatus().equals(NungilStatus.RECOMMENDED)){
             throw new GeneralException(NungilErrorResult.NUNGIL_WRONG_STATUS);
@@ -319,6 +326,16 @@ public class NungilService {
         markerSet1.retainAll(markerSet2);
 
         return new ArrayList<>(markerSet1);
+    }
+    /**
+     * ACQUAINTANCE 데이터베이스에 member와 acquaintanceMember로 구성된 데이터가 없는 경우 생성하고, 있는 경우 조회하여 반환하는 메서드이다.
+     * @param member Member 엔티티
+     * @param acquaintanceMember member 회원의 지인을 가리키는 Member 엔티티
+     * @return 조회된 Acquaintance 엔티티
+     */
+    private Acquaintance getAcquaintance(Member member, Member acquaintanceMember) {
+        return acquaintanceRepository.findByMemberAndAcquaintanceMember(member, acquaintanceMember)
+                .orElse(Acquaintance.create(member, acquaintanceMember));
     }
 
 }
