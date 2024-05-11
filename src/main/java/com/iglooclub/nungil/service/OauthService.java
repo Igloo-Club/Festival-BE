@@ -97,7 +97,7 @@ public class OauthService {
     public RegisterProgress getNextProgress(Member member) {
 
         // 장소가 존재하면, 가입 완료
-        if (member.getLocation() != null) {
+        if (!member.getMarkerList().isEmpty()) {
             return RegisterProgress.REGISTERED;
         }
 
