@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 public class ConsentPolicy {
 
     // 마케팅 정보 수신 동의
-    private Boolean agreeMarketing = false;
+    private Boolean agreeMarketing = true;
 
     public static ConsentPolicy create(Boolean agreeMarketing) {
         ConsentPolicy consentPolicy = new ConsentPolicy();
