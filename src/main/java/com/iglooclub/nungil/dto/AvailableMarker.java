@@ -24,7 +24,7 @@ public class AvailableMarker {
 
     public static AvailableMarker create(Marker marker) {
         AvailableMarker availableMarker = new AvailableMarker();
-        availableMarker.value = marker.getValue();
+        availableMarker.value = marker.name();
         availableMarker.title = marker.getTitle();
         availableMarker.address = marker.getAddress();
         availableMarker.latitude = marker.getLatitude();
