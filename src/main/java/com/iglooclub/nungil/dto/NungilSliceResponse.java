@@ -25,6 +25,8 @@ public class NungilSliceResponse {
 
     private String nickname;
 
+    private String sex;
+
     public static NungilSliceResponse create(Nungil nungil, Member member) {
         NungilSliceResponse response = new NungilSliceResponse();
         AnimalFace animalFace = member.getAnimalFace();
@@ -37,6 +39,7 @@ public class NungilSliceResponse {
         response.job = member.getJob();
         response.description = member.getDescription();
         response.nickname = member.getNickname();
+        response.sex = member.getSex().getTitle();
 
         return response;
     }
