@@ -104,8 +104,8 @@ public class NungilService {
 
         // Nungil 엔티티를 NungilPageResponse DTO로 변환
         List<NungilSliceResponse> nungilResponses = nungilSlice.getContent().stream()
-                .filter(nungil -> !member.equals(nungil.getReceiver()))
-                .filter(nungil -> acquaintanceRepository.findByMemberAndAcquaintanceMember(member, nungil.getReceiver()).isEmpty())
+                .filter(nungil -> member == null || !member.equals(nungil.getReceiver()))
+                .filter(nungil -> member == null || acquaintanceRepository.findByMemberAndAcquaintanceMember(member, nungil.getReceiver()).isEmpty())
                 .map(nungil -> NungilSliceResponse.create(nungil, nungil.getReceiver()))
                 .collect(Collectors.toList());
 

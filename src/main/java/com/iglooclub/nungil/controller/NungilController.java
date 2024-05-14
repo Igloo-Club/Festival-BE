@@ -30,7 +30,15 @@ public class NungilController {
 
     @GetMapping("/nungils")
     public ResponseEntity<Slice<NungilSliceResponse>> getNungilsByMemberAndStatus(Principal principal, @RequestParam NungilStatus status, @RequestParam int page, @RequestParam int size){
-        Member member = getMember(principal);
+        Member member = null;
+
+        try {
+            member = getMember(principal);
+        } catch (Exception e) {
+            if (!NungilStatus.RECOMMENDED.equals(status)) {
+                throw e;
+            }
+        }
 
         Slice<NungilSliceResponse> nungilPageResponses = null;
         if (NungilStatus.RECOMMENDED.equals(status)) {

@@ -11,6 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -61,6 +62,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/auth/**").permitAll()
                 .antMatchers("/stomp", "/stomp/**").permitAll()
+                .regexMatchers(HttpMethod.GET, "/api/nungil/nungils(\\?([^=&]*=[^=&]*&)*status=RECOMMENDED(&[^=&]*=[^=&]*)*)").permitAll()
                 .anyRequest().authenticated()
                 .and()
 
