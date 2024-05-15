@@ -166,12 +166,12 @@ public class NungilService {
         nungilRepository.save(newNungil2);
 
         // 눈길 받은 사용자에게 알림 전송
-//        String phoneNumber = receiver.getPhoneNumber();
-//        String url = BASE_URL + "/receiveddetailpage/" + newNungil.getId();
-//        String text = "[눈길] 새로운 눈길이 도착했어요. 얼른 확인해보세요!\n" + url;
-//
-//        coolSMS.send(phoneNumber, text);
-//        this.sendNungilSMS(receiver, newNungil2);
+        String phoneNumber = receiver.getPhoneNumber();
+        String url = BASE_URL + "/receiveddetailpage/" + newNungil2.getId();
+        String text = "[눈길] 새로운 눈길이 도착했어요. 얼른 확인해보세요!\n" + url;
+
+        coolSMS.send(phoneNumber, text);
+        this.sendNungilSMS(receiver, newNungil2);
     }
     public void sendNungilSMS(Member sender, Nungil sentNungil){
         publisher.publishEvent(new NungilSentEvent(sender, sentNungil));
@@ -226,9 +226,9 @@ public class NungilService {
         chatRoomRepository.save(chatRoom);
 
         // 눈길 보낸 사용자에게 알림 전송
-//        String phoneNumber = sender.getPhoneNumber();
-//        String url = BASE_URL + "/finishmatch/" + sentNungil.getId();
-//        String text = "[눈길] 축하해요! 서로의 눈길이 닿았어요. 채팅방을 통해 두 분의 첫만남 약속을 잡아보세요.\n" + url;
+        String phoneNumber = sender.getPhoneNumber();
+        String url = BASE_URL + "/finishmatch/" + sentNungil.getId();
+        String text = "[눈길] 축하해요! 서로의 눈길이 닿았어요. 채팅방을 통해 두 분의 첫만남 약속을 잡아보세요.\n" + url;
 
 
         this.sendMatchSMS(sender, sentNungil);
