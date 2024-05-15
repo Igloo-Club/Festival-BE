@@ -31,7 +31,7 @@ public class TokenService {
         // 현재 사용자의 가입 절차 탐색
         RegisterProgress nextProgress = oauthService.getNextProgress(member);
 
-        String token = tokenProvider.generateToken(member, Duration.ofHours(2));
+        String token = tokenProvider.generateToken(member, Duration.ofHours(24));
 
         return new LoginResponse(token, nextProgress.getTitle(), RegisterProgress.REGISTERED.equals(nextProgress));
     }
