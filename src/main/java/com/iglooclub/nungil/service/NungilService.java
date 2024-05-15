@@ -170,7 +170,6 @@ public class NungilService {
         String url = BASE_URL + "/receiveddetailpage/" + newNungil2.getId();
         String text = "[눈길] 새로운 눈길이 도착했어요. 얼른 확인해보세요!\n" + url;
 
-        coolSMS.send(phoneNumber, text);
         this.sendNungilSMS(receiver, newNungil2);
     }
     public void sendNungilSMS(Member sender, Nungil sentNungil){
