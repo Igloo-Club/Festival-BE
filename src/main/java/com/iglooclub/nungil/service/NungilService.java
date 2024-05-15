@@ -213,7 +213,15 @@ public class NungilService {
 
         List<AvailableTime> commonAvailableTimes = findCommonAvailableTimes(member, sender);
         if(!commonAvailableTimes.isEmpty()){
-            time = commonAvailableTimes.get(0);
+            for(int i = 0; i < commonAvailableTimes.size();i++){
+                time = commonAvailableTimes.get(i);
+                if(time.getValue() > LocalDateTime.now().getHour()){
+                    break;
+                }
+                else{
+                    time = null;
+                }
+            }
             member.deleteAvailableTime(time);
             sender.deleteAvailableTime(time);
         }
