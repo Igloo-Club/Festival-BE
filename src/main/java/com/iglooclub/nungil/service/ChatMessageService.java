@@ -5,15 +5,17 @@ import com.iglooclub.nungil.domain.enums.*;
 import com.iglooclub.nungil.dto.*;
 import com.iglooclub.nungil.exception.ChatRoomErrorResult;
 import com.iglooclub.nungil.exception.GeneralException;
+import com.iglooclub.nungil.exception.NungilErrorResult;
 import com.iglooclub.nungil.repository.ChatMessageRepository;
 import com.iglooclub.nungil.repository.ChatRoomRepository;
+import com.iglooclub.nungil.repository.NungilRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +31,8 @@ public class ChatMessageService {
     private final ChatRoomRepository chatRoomRepository;
 
     private final ChatMessageRepository chatMessageRepository;
+
+    private final NungilRepository nungilRepository;
 
     /**
      * 채팅 메시지를 데이터베이스에 저장하는 메서드입니다.
@@ -167,12 +171,16 @@ public class ChatMessageService {
     public AvailableTimeAndPlaceResponse getAvailableTimeAndPlace(Member member, Long chatRoomId){
         ChatRoom chatRoom = chatRoomRepository.findById(chatRoomId)
                 .orElseThrow(()-> new GeneralException(ChatRoomErrorResult.CHAT_ROOM_NOT_FOUND));
+
         Member opponent = getOpponent(chatRoom, member);
 
-        List<AvailableTime> timeList = opponent.getAvailableTimeList();
+        Nungil nungil = nungilRepository.findFirstByMemberAndReceiver(member, opponent)
+                .orElseThrow(()-> new GeneralException(NungilErrorResult.NUNGIL_NOT_FOUND));
+
+        AvailableTime time = nungil.getMatchedAvailableTime();
         List<Marker> markersList = opponent.getMarkerList();
 
-        return AvailableTimeAndPlaceResponse.create(timeList, markersList);
+        return AvailableTimeAndPlaceResponse.create(time, markersList);
     }
 
 

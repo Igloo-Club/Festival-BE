@@ -14,19 +14,19 @@ import java.util.stream.Collectors;
 public class AvailableTimeAndPlaceResponse {
 
 
-    private List<String> time;
+    private String time;
 
     private List<AvailableMarker> marker;
 
 
     //=== 생성 메서드 ===//
     public static AvailableTimeAndPlaceResponse create(
-                                                       List<AvailableTime> availableTimeList,
+                                                       AvailableTime availableTime,
                                                        List<Marker> markerList) {
 
         AvailableTimeAndPlaceResponse response = new AvailableTimeAndPlaceResponse();
 
-        response.time = availableTimeList.stream().map(AvailableTime::getTitle).collect(Collectors.toList());
+        response.time = availableTime.getTitle();
         response.marker = markerList.stream().map(AvailableMarker::create).collect(Collectors.toList());
 
         return response;
